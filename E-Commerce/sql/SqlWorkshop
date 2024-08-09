@@ -1,0 +1,15 @@
+create table orders(productid int primary key, productname char(10), customerid int,orderdate date, quantity int); 
+insert into orders (productid,productname,customerid,orderdate,quantity) 
+	values (122,'Mascara',122,'2024-07-04',2),
+	(123,'Lipstick',123,'2024-07-05',3),
+	(124,'Gloss',124,'2024-07-05',3),
+	(125,'Kajal',125,'2024-07-06',5),
+	(126,'Compact',126,'2024-07-07',7); 
+select * from orders; 
+create or replace function get_orders_in_date_range(start_date date,end_date date) 
+	returns table (orderid int, productid int,customerid int,orderdate date, quantity int) 
+	as $$ begin return query 
+	select o.orderid,o.prodectid,o.productid,o.orderdate,o.quantity from orders o
+	where o.orderdate between start_date and end_date;
+end; $$ language plpgsql; 
+select * from orders where orderdate between '2024-07-03' and '2024-07-05';
